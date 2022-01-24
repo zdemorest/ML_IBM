@@ -16,7 +16,7 @@ launch_sites = spacex_df['Launch Site'].unique()
 app = dash.Dash(__name__)
 
 # Create an app layout
-app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
+app.layout = html.Div(children={html.H1('SpaceX Launch Records Dashboard',
                                         style={'textAlign': 'center', 'color': '#503D36',
                                                'font-size': 40}),
                                 # TASK 1: Add a dropdown list to enable Launch Site selection
@@ -24,17 +24,17 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
                                 # dcc.Dropdown(id='site-dropdown',...)
                                 html.Br(),
                                 html.Div(dcc.Dropdown(id='site-dropdown',
-                                options=[
-                                    {'label': 'All Sites', 'value': 'ALL'},
-                                    {'label': launch_sites[0], 'value': launch_sites[0]},
-                                    {'label': launch_sites[1], 'value': launch_sites[1]},
-                                    {'label': launch_sites[2], 'value': launch_sites[2]},
-                                    {'label': launch_sites[3], 'value': launch_sites[3]},
-                                ],
-                                value='ALL',
-                                placeholder="Select a Launch Site here",
-                                searchable=True
-                                )),
+                                                      options=[
+                                                          {'label': 'All Sites', 'value': 'ALL'},
+                                                          {'label': launch_sites[0], 'value': launch_sites[0]},
+                                                          {'label': launch_sites[1], 'value': launch_sites[1]},
+                                                          {'label': launch_sites[2], 'value': launch_sites[2]},
+                                                          {'label': launch_sites[3], 'value': launch_sites[3]},
+                                                      ],
+                                                      value='ALL',
+                                                      placeholder="Select a Launch Site here",
+                                                      searchable=True
+                                                      )),
 
                                 # TASK 2: Add a pie chart to show the total successful launches count for all sites
                                 # If a specific launch site was selected, show the Success vs. Failed counts for the site
@@ -43,18 +43,20 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
 
                                 html.P("Payload range (Kg):"),
                                 # TASK 3: Add a slider to select payload range
-                                #dcc.RangeSlider(id='payload-slider',...)
+                                # dcc.RangeSlider(id='payload-slider',...)
                                 dcc.RangeSlider(id='payload-slider',
                                                 min=0,
                                                 max=10000,
                                                 step=1000,
-                                                marks={0: '0', 100: '100'},
+                                                marks={0: '0', 1000: '1000', 2000: '2000', 3000: '3000', 4000: '4000',
+                                                       5000: '5000', 6000: '6000', 7000: '7000', 8000: '8000',
+                                                       9000: '9000', 10000: '10000'},
                                                 value=[min_payload, max_payload]
                                                 ),
 
                                 # TASK 4: Add a scatter chart to show the correlation between payload and launch success
                                 html.Div(dcc.Graph(id='success-payload-scatter-chart')),
-                                ])
+                                })
 
 # TASK 2:
 # Add a callback function for `site-dropdown` as input, `success-pie-chart` as output
